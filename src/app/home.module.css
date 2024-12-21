@@ -939,7 +939,9 @@
     gap: 3px;
     flex-shrink: 0;
 }
-
+.boxscanandstatusqr video{
+    border-radius: 18px;
+}
 @media screen and (min-width:1920px) {
     .rootcontaioner {
         width: 100%;
@@ -1016,6 +1018,9 @@
 
 
 @media screen and (max-width:600px) {
+    .blockforScanner{
+        width: 100%;
+    }
     .boxright {
         padding: 38px;
     }

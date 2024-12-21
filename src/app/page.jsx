@@ -967,7 +967,10 @@ export default function Home() {
                                 {cameras.map((camera) => (
                                   <button
                                     key={camera.id}
-                                    onClick={() => setSelectedCamera(camera.id)}
+                                    onClick={() => {
+                                      setSelectedCamera(camera.id); // Устанавливаем выбранную камеру
+                                      setcamerabutton(false); // Закрываем блок с камерами
+                                    }}
                                     style={{
                                       background:
                                         selectedCamera === camera.id
