@@ -366,7 +366,7 @@ export default function Home() {
       html5QrCode
         .start(
           selectedCamera, // Используем выбранную камеру
-          { fps: 15, qrbox: { height: 300 } }, // Настройки сканера
+          { fps: 15, qrbox: { width: 300, height: 300 } }, // Настройки сканера
           qrCodeSuccess,
           qrCodeError
         )
@@ -391,7 +391,7 @@ export default function Home() {
     const fetchData = async () => {
       const accessToken = getAccessToken(); // Получаем токен из хранилища
       try {
-        const response = await fetch("https://api.tcats.uz/api/auth/staff", {
+        const response = await fetch("https://api.tcats.uz/api/auth/staff/", {
           method: "GET", // Метод должен быть 'GET'
           headers: {
             "Content-Type": "application/json",
