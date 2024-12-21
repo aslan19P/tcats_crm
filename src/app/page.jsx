@@ -366,7 +366,7 @@ export default function Home() {
       html5QrCode
         .start(
           selectedCamera, // Используем выбранную камеру
-          { fps: 15 }, // Настройки сканера
+          { fps: 15, qrbox: { height: 300 } }, // Настройки сканера
           qrCodeSuccess,
           qrCodeError
         )
