@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    container_name: tcats_crm
+    ports:
+      - "3003:3000"
+    # Для продакшн-режима не используется volumes (иначе будут проблемы с кешированием)
+    command: ["npm", "start"]

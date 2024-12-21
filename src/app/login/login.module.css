@@ -1,0 +1,357 @@
+.container2 {
+    width: 100%;
+    height: 100vh;
+    background: url('/1.png') #141414 50% / cover no-repeat;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Основной блок второго контейнера */
+.main2 {
+    display: flex;
+    width: 656px;
+    height: 500px;
+    padding: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: var(--Spacing-ml, 20px);
+    background: #1A1A1A;
+}
+
+.boxlogo {
+    display: flex;
+    flex-direction: row;
+    display: inline-flex;
+    height: 60px;
+    align-items: center;
+    gap: 11px;
+    flex-shrink: 0;
+    margin: 0 auto;
+}
+
+.crm {
+    width: 55px;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-radius: 30px;
+    border: 1px solid var(--Primary-Primary, #BA8AFF);
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.crm p {
+    color: var(--Primary-Primary, #BA8AFF);
+    font-family: Involve;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Блок для ввода информации */
+.block2 {
+    display: flex;
+    width: 656px;
+    height: 500px;
+    padding: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: var(--Spacing-ml, 20px);
+    background: #1A1A1A;
+}
+
+/* Стиль для текста */
+.text2 {
+    display: flex;
+    width: 596px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Spacing-ml, 20px);
+}
+
+/* Стиль заголовков */
+.text2 h3 {
+    color: #FFF;
+    font-family: Organetto;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+    align-self: stretch;
+    backdrop-filter: blur(15px);
+}
+
+/* Стиль для параграфов */
+.text2 p {
+    color: var(--Base-Base-White, #FFF);
+    font-family: Involve;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+}
+
+/* Стиль для ввода номера телефона */
+.inputNumber {
+    display: flex;
+    height: 100px;
+    padding: 18px 30px;
+    align-items: center;
+    gap: var(--Spacing-ml, 20px);
+    align-self: stretch;
+    border-radius: 10px;
+    color: #FFF;
+    font-family: Involve;
+    font-size: 24px;
+    font-weight: 400;
+    background: var(--Neutrals-Neutrals2400, #262626);
+}
+
+
+.inputNumberred {
+    display: flex;
+    height: 100px;
+    padding: 18px 30px;
+    align-items: center;
+    gap: var(--Spacing-ml, 20px);
+    align-self: stretch;
+    border-radius: 10px;
+    color: #FFF;
+    font-family: Involve;
+    font-size: 24px;
+    font-weight: 400;
+    background: var(--Neutrals-Neutrals2400, #262626);
+    border: 1px solid var(--Error-Error, #FF3347);
+}
+
+.inputNumber input,
+.inputNumberred input {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    gap: var(--Spacing-ml, 20px);
+    align-self: stretch;
+    border-radius: 10px;
+    color: #FFF;
+    font-family: Involve;
+    font-size: 24px;
+    background: var(--Neutrals-Neutrals2400, #262626);
+    outline: none;
+}
+
+.inputNumber::placeholder {
+    color: var(--Neutrals-Neutrals1800, #5C5C5C);
+    font-family: Involve;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.arrow_btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.InputIcon{
+    width: 42px;
+}
+.InputIcon2{
+    width: 30px;
+    transition: 0.3s;
+    cursor: pointer; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+
+  
+  .iconHidden {
+    transform: rotate(0deg);
+    opacity: 0.8;
+  } 
+
+.btn_next {
+    display: flex;
+    width: 212px;
+    height: 70px;
+    padding: 29px 30px;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+    border-radius: 60px;
+    border: 1px solid var(--Neutrals-Neutrals1800, #5C5C5C);
+    background: var(--COLORS-Neutral-500, #191716);
+    transition: 0.3s;
+    transform: translateX(0px);
+}
+
+.btn_next_img {
+    transition: transform 0.3s ease;
+}
+
+.btn_next:hover .btn_next_img {
+    transform: translateX(60px);
+}
+
+
+.btn_next_active {
+    display: flex;
+    width: 212px;
+    height: 70px;
+    padding: 29px 30px;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 60px;
+    border: 1px solid var(--Neutrals-Neutrals1800, #5C5C5C);
+    background: var(--COLORS-Neutral-500, #191716);
+
+}
+
+
+/* //////////////////////////// */
+
+
+@media screen and (max-width:700px) {
+
+    .main2,
+    .text2 {
+        width: 100%;
+    }
+
+    .text2 {
+        gap: 18px;
+    }
+
+    .inputNumber input::placeholder,
+    .inputNumberred input::placeholder {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:618px) {
+    .text2 h3 {
+        font-size: 32px;
+    }
+
+    .text2 p {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width:600px) {
+
+    .inputNumber,
+    .inputNumberred {
+        height: 80px;
+        padding: 17px 20px;
+    }
+
+    .main2 {
+        height: 470px;
+    }
+}
+
+@media screen and (max-width:561px) {
+    .text2 h3 {
+        font-size: 30px;
+    }
+
+    .text2 p {
+        font-size: 19px;
+    }
+}
+
+@media screen and (max-width:533px) {
+    .text2 h3 {
+        font-size: 26px;
+    }
+    .inputNumber input  {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:500px) {
+
+    .btn_next,
+    .btn_next_active {
+        width: 100%;
+    }
+    .btn_next:hover .btn_next_img {
+        transform: translateX(0px);
+    }
+    .InputIcon{
+        width: 30px;
+    }
+    .InputIcon2{
+        width: 24px;
+    }
+    .btn_next{
+        height: 60px;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .text2 h3 {
+        font-size: 23px;
+    }
+
+    .main2 {
+        height: 460px;
+    }
+
+    .inputNumber input::placeholder,
+    .inputNumberred input::placeholder {
+        font-size: 14px;
+    }
+    .inputNumber input  {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width:450px) {
+
+    .inputNumber,
+    .inputNumberred {
+        height: 70px;
+        padding: 15px 15px;
+    }
+
+    .main2 {
+        height: 450px;
+    }
+}
+
+@media screen and (max-width:444px) {
+    .text2 h3 {
+        font-size: 20px;
+    }
+
+    .text2 p {
+        font-size: 16px;
+    }
+
+    .main2 {
+        height: 440px;
+    }
+}
+
+@media screen and (max-width:395px) {
+    .text2 h3 {
+        font-size: 24px;
+    }
+
+    .text2 p {
+        font-size: 14px;
+    }
+}

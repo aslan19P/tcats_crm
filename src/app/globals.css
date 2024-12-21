@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #141414;
+  --foreground: #fff;
+  overflow-y: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #141414;
+    --foreground: #fff;
+    overflow-y: hidden;
+  }
+}
+
+@font-face {
+  font-family: 'Involve';
+  src: url('/fonts/Involve-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Involve';
+  src: url('/fonts/Involve-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Involve';
+  src: url('/fonts/Involve-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Involve';
+  src: url('/fonts/Involve-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Organetto';
+  src: url('/fonts/organetto-bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Involve;
+  height: 100%;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* globals.css */
+body::-webkit-scrollbar {
+  display: none;
+}
+
