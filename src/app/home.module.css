@@ -2,7 +2,6 @@
     position: relative;
     backdrop-filter: blur(4px);
     width: 400px;
-    height: 100%;
     z-index: 5;
     display: flex;
     flex-direction: column;
@@ -14,7 +13,11 @@
 .blockforScanner button {
     position: absolute;
     right: 10px;
-    top: 20px;
+    top: 10px;
+}
+
+#qr-shaded-region {
+    display: none;
 }
 
 
@@ -939,9 +942,11 @@
     gap: 3px;
     flex-shrink: 0;
 }
-.boxscanandstatusqr video{
+
+.boxscanandstatusqr video {
     border-radius: 18px;
 }
+
 @media screen and (min-width:1920px) {
     .rootcontaioner {
         width: 100%;
@@ -993,7 +998,10 @@
 
 @media screen and (max-width:820px) {
     .boxrowinfocashier {
-        display: none;
+        display: flex;
+        margin: 0 auto;
+        justify-content: end;
+        align-items: end;
     }
 
     .containerrow {
@@ -1011,27 +1019,30 @@
     .maincashier {
         flex-direction: column-reverse;
     }
-    .boxbottom{
+
+    .boxbottom {
         display: flex;
     }
 }
 
 
 @media screen and (max-width:600px) {
-    .blockforScanner{
+    .blockforScanner {
         width: 100%;
     }
+
     .boxright {
         padding: 38px;
     }
 }
 
 @media screen and (max-width:540px) {
-    .boxBottomBtn img{
+    .boxBottomBtn img {
         width: 24px;
         height: 24px;
     }
-    .boxBottomBtn p{
+
+    .boxBottomBtn p {
         font-size: 10px;
     }
 }
@@ -1043,19 +1054,22 @@
     }
 }
 
-@media screen and (max-width:450px){
+@media screen and (max-width:450px) {
     .rootcontaioner {
         padding: 14px 14px 0px 14px;
     }
 }
+
 @media screen and (max-width:450px) {
     .boxright {
         padding: 10px !important;
     }
-    .boxscanandstatusqr{
+
+    .boxscanandstatusqr {
         padding: 14px 20px;
     }
-    .boxsucsesserror{
+
+    .boxsucsesserror {
         width: 170px;
     }
 }

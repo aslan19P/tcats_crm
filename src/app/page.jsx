@@ -10,6 +10,8 @@ import axios from "axios";
 import { DateTime } from "luxon";
 import { Html5Qrcode } from "html5-qrcode";
 import { getAccessToken } from "./login/Tokens";
+import useApi from '../utils/api';
+
 
 import { Line } from "react-chartjs-2";
 import {
@@ -288,7 +290,9 @@ export default function Home() {
   const [qrMessage, setQrMessage] = useState(""); // Считанное сообщение QR-кода
   const [cameras, setCameras] = useState([]); // Список камер
   const [selectedCamera, setSelectedCamera] = useState(""); // Выбранная камера
-  const [error, setError] = useState(""); // Ошибка получения камер
+  const [scanStatus, setScanStatus] = useState(""); // Статус сканирования
+  const [error, setError] = useState(""); // Ошибки
+  const api = useApi(); // Инстанс API
 
   // Получение списка камер при загрузке компонента
   useEffect(() => {
@@ -307,75 +311,74 @@ export default function Home() {
       });
   }, []);
 
-
-
   useEffect(() => {
     let html5QrCode;
 
+    // Функция отправки данных на сервер
     const sendScannedData = async (ticketId) => {
       try {
-        const accessToken = getAccessToken(); // Получаем accessToken из zustand или другого хранилища
-
-        if (!accessToken) {
-          console.error("Токен отсутствует");
-          return;
-        }
-
-        const response = await fetch(
-          "https://api.tcats.uz/api/partner_tickets/cashier/scanner/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки
-            },
-            body: JSON.stringify({ ticket_id: ticketId }),
-          }
+        const response = await api.post(
+          "/api/partner_tickets/cashier/scanner/",
+          { ticket_id: ticketId }
         );
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Данные успешно отправлены:", data);
+    
+        if (response.status === 200) {
+          console.log("Данные успешно отправлены:", response.data);
+          setScanStatus("Успешно отсканировано!"); // Успешный статус
+          setQrMessage(`Успешно отсканировано!`); // Успешно отсканированный QR-код
+        } else if (response.status === 400) {
+          console.log("Ошибка отправленных данных:", response.data);
+          setScanStatus("QR код уже использован!"); // Ошибка: QR код уже использован
+          setQrMessage("Ошибка: QR код уже использован!"); // Отображение ошибки
+        }else if (response.status === 404) {
+          console.log("Ошибка отправленных данных:", response.data);
+          setScanStatus("QR кода не сушествует!"); // Ошибка: QR код уже использован
+          setQrMessage("QR кода не сушествует!"); // Отображение ошибки
         } else {
-          console.error(
-            "Ошибка при отправке данных:",
-            response.status,
-            response.statusText
-          );
+          console.error("Ошибка при отправке данных:", response.status, response.statusText);
+          setScanStatus(`Ошибка: ${response.status} ${response.statusText}`);
+          setQrMessage(`Ошибка: ${response.status} ${response.statusText}`); // Отображение ошибки
         }
       } catch (error) {
         console.error("Ошибка запроса:", error);
+        setScanStatus("Ошибка: данный QR-Code уже использован или не существует!");
+        setQrMessage("Ошибка: данный QR-Code уже использован или не существует!"); // Отображение ошибки
       }
     };
-
+    
+    // Успешное считывание QR-кода
     const qrCodeSuccess = (decodedText) => {
-      console.log("QR-код успешно считан:", decodedText);
-      setQrMessage(decodedText);
-      setIsEnabled(false); // Останавливаем сканирование после успешного чтения
-
-      // Отправляем данные на API
-      sendScannedData(decodedText);
+      console.log("QR-код успешно считан");
+      setIsEnabled(false); // Остановка сканера
+      sendScannedData(decodedText); // Отправка данных
     };
-
+    
+    // Ошибка считывания QR-кода
     const qrCodeError = (error) => {
       console.warn("Ошибка считывания QR-кода:", error);
+      setQrMessage("Ошибка при считывании QR-кода."); // Отображение ошибки
     };
 
+    // Инициализация сканера
     if (isEnabled && selectedCamera) {
       html5QrCode = new Html5Qrcode("qrCodeContainer");
       html5QrCode
         .start(
-          selectedCamera, // Используем выбранную камеру
-          { fps: 15, qrbox: { width: 300, height: 300 } }, // Настройки сканера
+          { deviceId: { exact: selectedCamera } }, // Используем выбранную камеру
+          {
+            fps: 10, // Кадры в секунду
+            // qrbox: { width: 250, height: 250 }, // Размер области сканирования
+          },
           qrCodeSuccess,
           qrCodeError
         )
         .catch((err) => {
           console.error("Ошибка запуска сканера:", err);
-          setIsEnabled(false);
+          setScanStatus("Ошибка запуска сканера");
         });
     }
 
+    // Очистка при размонтировании
     return () => {
       if (html5QrCode) {
         html5QrCode.stop().then(() => html5QrCode.clear());
@@ -874,7 +877,7 @@ export default function Home() {
                           id="qrCodeContainer"
                           style={{
                             width: "100%",
-                            height: "300px",
+                            height: "100px",
                             borderRadius: "40px",
                           }}
                         ></div>
@@ -967,10 +970,7 @@ export default function Home() {
                                 {cameras.map((camera) => (
                                   <button
                                     key={camera.id}
-                                    onClick={() => {
-                                      setSelectedCamera(camera.id); // Устанавливаем выбранную камеру
-                                      setcamerabutton(false); // Закрываем блок с камерами
-                                    }}
+                                    onClick={() => setSelectedCamera(camera.id)}
                                     style={{
                                       background:
                                         selectedCamera === camera.id
@@ -1008,7 +1008,7 @@ export default function Home() {
                           </AnimatePresence>
                           {qrMessage ? (
                             <p className={styles.qrMessage}>
-                              Считанный QR-код: {qrMessage}
+                              {qrMessage}
                             </p>
                           ) : (
                             <></>
