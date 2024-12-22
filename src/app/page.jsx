@@ -10,8 +10,7 @@ import axios from "axios";
 import { DateTime } from "luxon";
 import { Html5Qrcode } from "html5-qrcode";
 import { getAccessToken } from "./login/Tokens";
-import useApi from '../utils/api';
-
+import useApi from "../utils/api";
 
 import { Line } from "react-chartjs-2";
 import {
@@ -321,7 +320,7 @@ export default function Home() {
           "/api/partner_tickets/cashier/scanner/",
           { ticket_id: ticketId }
         );
-    
+
         if (response.status === 200) {
           console.log("Данные успешно отправлены:", response.data);
           setScanStatus("Успешно отсканировано!"); // Успешный статус
@@ -330,29 +329,37 @@ export default function Home() {
           console.log("Ошибка отправленных данных:", response.data);
           setScanStatus("QR код уже использован!"); // Ошибка: QR код уже использован
           setQrMessage("Ошибка: QR код уже использован!"); // Отображение ошибки
-        }else if (response.status === 404) {
+        } else if (response.status === 404) {
           console.log("Ошибка отправленных данных:", response.data);
           setScanStatus("QR кода не сушествует!"); // Ошибка: QR код уже использован
           setQrMessage("QR кода не сушествует!"); // Отображение ошибки
         } else {
-          console.error("Ошибка при отправке данных:", response.status, response.statusText);
+          console.error(
+            "Ошибка при отправке данных:",
+            response.status,
+            response.statusText
+          );
           setScanStatus(`Ошибка: ${response.status} ${response.statusText}`);
           setQrMessage(`Ошибка: ${response.status} ${response.statusText}`); // Отображение ошибки
         }
       } catch (error) {
         console.error("Ошибка запроса:", error);
-        setScanStatus("Ошибка: данный QR-Code уже использован или не существует!");
-        setQrMessage("Ошибка: данный QR-Code уже использован или не существует!"); // Отображение ошибки
+        setScanStatus(
+          "Ошибка: данный QR-Code уже использован или не существует!"
+        );
+        setQrMessage(
+          "Ошибка: данный QR-Code уже использован или не существует!"
+        ); // Отображение ошибки
       }
     };
-    
+
     // Успешное считывание QR-кода
     const qrCodeSuccess = (decodedText) => {
       console.log("QR-код успешно считан");
       setIsEnabled(false); // Остановка сканера
       sendScannedData(decodedText); // Отправка данных
     };
-    
+
     // Ошибка считывания QR-кода
     const qrCodeError = (error) => {
       console.warn("Ошибка считывания QR-кода:", error);
@@ -401,12 +408,12 @@ export default function Home() {
             Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки
           },
         });
-  
+
         if (!response.ok) {
           // Обработка ошибок ответа
           throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
         }
-  
+
         const data = await response.json(); // Парсим JSON из ответа
         setGetUserInfo(data); // Устанавливаем данные в состояние
       } catch (error) {
@@ -414,10 +421,9 @@ export default function Home() {
         setGetUserInfo(null); // Устанавливаем null при ошибке
       }
     };
-  
+
     fetchData();
   }, []);
-
 
   const [getUserStat, setGetUserStat] = useState(null);
 
@@ -425,19 +431,22 @@ export default function Home() {
     const fetchData = async () => {
       const accessToken = getAccessToken(); // Получаем токен из хранилища
       try {
-        const response = await fetch("https://api.tcats.uz/api/partner_tickets/get-all-scans/", {
-          method: "GET", // Метод должен быть 'GET'
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки
-          },
-        });
-  
+        const response = await fetch(
+          "https://api.tcats.uz/api/partner_tickets/get-all-scans/",
+          {
+            method: "GET", // Метод должен быть 'GET'
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки
+            },
+          }
+        );
+
         if (!response.ok) {
           // Обработка ошибок ответа
           throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
         }
-  
+
         const data = await response.json(); // Парсим JSON из ответа
         setGetUserStat(data); // Устанавливаем данные в состояние
       } catch (error) {
@@ -445,7 +454,7 @@ export default function Home() {
         setGetUserStat(null); // Устанавливаем null при ошибке
       }
     };
-  
+
     fetchData();
   }, []);
   return (
@@ -624,22 +633,23 @@ export default function Home() {
                     </div>
                   </h1>
                   {getUserInfo && (
-                  <div className={styles.infocashier}>
-                    <div className={styles.boxavatarname}>
-                      <Image
-                        src="/avatar.png"
-                        alt="avatar"
-                        width={50}
-                        height={50}
-                      />
-                      <h2>
-                        {getUserInfo.last_name} <br /> {getUserInfo.first_name}
-                      </h2>
+                    <div className={styles.infocashier}>
+                      <div className={styles.boxavatarname}>
+                        <Image
+                          src="/avatar.png"
+                          alt="avatar"
+                          width={50}
+                          height={50}
+                        />
+                        <h2>
+                          {getUserInfo.last_name} <br />{" "}
+                          {getUserInfo.first_name}
+                        </h2>
+                      </div>
+                      <div className={styles.cashier}>
+                        <p>{getUserInfo.role}</p>
+                      </div>
                     </div>
-                    <div className={styles.cashier}>
-                      <p>{getUserInfo.role}</p>
-                    </div>
-                  </div>
                   )}
                 </div>
                 <div className={styles.maincashier}>
@@ -851,22 +861,41 @@ export default function Home() {
                           <p>Статус</p>
                         </div>
                         <div className={styles.boxscrollstat}>
-                        {getUserStat && getUserStat.map(({id, status, created_at, ticket, partner_ticket}) => (
-                        <div key={id} className={styles.boxtwostat}>
-                          <p>{id}</p>
-                          <p>{ticket == null ? partner_ticket : ticket}</p>
-                          <p>{new Date(created_at).toLocaleDateString("ru-RU")}</p>
-                          <p>
-                            <Image
-                              src={status ? "/scansucsessone.svg" : "/scanerror.svg"}
-                              alt="sucsess"
-                              width={24}
-                              height={24}
-                            />
-                          </p>
+                          {getUserStat &&
+                            getUserStat.map(
+                              ({
+                                id,
+                                status,
+                                created_at,
+                                ticket,
+                                partner_ticket,
+                              }) => (
+                                <div key={id} className={styles.boxtwostat}>
+                                  <p>{id}</p>
+                                  <p>
+                                    {ticket == null ? partner_ticket : ticket}
+                                  </p>
+                                  <p>
+                                    {new Date(created_at).toLocaleDateString(
+                                      "ru-RU"
+                                    )}
+                                  </p>
+                                  <p>
+                                    <Image
+                                      src={
+                                        status
+                                          ? "/scansucsessone.svg"
+                                          : "/scanerror.svg"
+                                      }
+                                      alt="sucsess"
+                                      width={24}
+                                      height={24}
+                                    />
+                                  </p>
+                                </div>
+                              )
+                            )}
                         </div>
-                        ))}
-                      </div>
                       </div>
                     </div>
                   </div>
@@ -970,7 +999,10 @@ export default function Home() {
                                 {cameras.map((camera) => (
                                   <button
                                     key={camera.id}
-                                    onClick={() => setSelectedCamera(camera.id)}
+                                    onClick={() => {
+                                      setSelectedCamera(camera.id); // Устанавливаем выбранную камеру
+                                      setcamerabutton(false); // Закрываем блок с камерами
+                                    }}
                                     style={{
                                       background:
                                         selectedCamera === camera.id
@@ -1007,9 +1039,7 @@ export default function Home() {
                             </motion.button>
                           </AnimatePresence>
                           {qrMessage ? (
-                            <p className={styles.qrMessage}>
-                              {qrMessage}
-                            </p>
+                            <p className={styles.qrMessage}>{qrMessage}</p>
                           ) : (
                             <></>
                           )}
